@@ -1,0 +1,25 @@
+---
+C48:
+  deltim: 450
+  layout: [2, 4]
+  layout_gfs: [2, 4]
+  npe_node_fcst: 24
+  nthreads: 1
+  cdmbgwd: [0.071, 2.1, 1.0, 1.0]
+  write_group: 1
+  wrttask_per_group: 24
+  write_group_gfs: 1
+  wrttask_per_group_gfs: 24
+  wrtiobuf: "4m"
+C96:
+  deltim: 450
+  layout: [4, 4]
+  layout_gfs: [4, 4]
+  npe_node_fcst: 24
+  nthreads: 1
+  cdmbgwd: [0.14, 1.8, 1.0, 1.0]
+  write_group: 1
+  wrttask_per_group: 24
+  write_group_gfs: 1
+  wrttask_per_group_gfs: 24
+  wrtiobuf: "4m"
