@@ -1,0 +1,109 @@
+---
+fcst:
+  basic:
+    exscript: "exglobal_fcst.py"
+    fcstexec: "global_fv3gfs.x"
+
+  # Model configuration
+  dycore:
+    dycore_type: "nh"
+    dycore_mono: "non-mono"
+
+  # Use stratosphere h2o physics
+  h2o_phys: ".true."
+
+  # Options of stratosphere O3 physics reaction coefficients
+  new_o3forc: "YES"
+
+  # do_ugwp True: use unified CGWD and OGWD, and turbulent orographic form drag (TOFD)
+  # do_ugwp False: use unified CGWD but old OGWD, TOFD is not used
+  do_ugwp: False
+  do_tofd: True
+  launch_level_fac: 2.35 # launch_level = LEVS / launch_level_fac
+
+  sponge_layer:
+    L128:
+      tau: 5.0
+      rf_cutoff: 1.e3
+      d2_bg_k1: 0.20
+      d2_bg_k2: 0.0
+
+  # PBL/turbulence schemes
+  pbl_turbulence:
+    hybedmf: False
+    satmedmf: True
+    isatmedmf: 1
+  # tbf ""
+  # if [ $satmedmf   ".true." ]; then tbf "_satmedmf" ; fi
+
+  # Land surface model.
+  land_surface:
+    land_surface_model: "NoahMP"
+    Noah:
+      lsm: 1
+      lheatstrg: True
+      landice: True
+    NoahMP:
+      lsm: 2
+      lheatstrg: False
+      landice: False
+
+  # Radiation options
+  radiation:
+    iaer: 5111    # spectral band mapping method for aerosol optical properties
+    iovr_lw: 3    # de-correlation length cloud overlap method (Barker, 2008)
+    iovr_sw: 3    # de-correlation length cloud overlap method (Barker, 2008)
+    icliq_sw: 2   # cloud optical coeffs from AER's newer version v3.9-v4.0 for hu and stamnes
+
+
+  # Microphysics configuration
+  microphysics:
+    dnats: 0
+    cal_pre: True
+    do_sat_adj: False
+    random_clds: True
+    ZhaoCarr:
+      ncld: 1
+      nwat: 2
+      field_table: field_table_zhaocarr
+    WSM:
+      ncld: 2
+      nwat: 6
+      field_table: field_table_wsm
+    Thompson:
+      ncld: 2
+      nwat: 6
+      field_table: field_table_thompson
+    GFDL:
+      ncld: 5
+      nwat: 6
+      field_table: field_table_gfdl
+      dnats: 1
+      cal_pre: False
+      do_sat_adj: True
+      random_clds: False
+      lgfdlmprad: True
+      effr_in: True
+      reiflag: 2
+      hord_mt_nh_nonmono: 5
+      hord_xx_nh_nonmono: 5
+      vtdm4_nh_nonmono: 0.02
+      nord: 2
+      dddmp: 0.1
+      d4_bg: 0.12
+  netcdf_io:
+    ideflate: 1 # netcdf zlib lossless compression (0-9): 0 no compression
+    nbits: 14 # netcdf lossy compression level (0-32): 0 lossless
+    ishuffle: 0
+    shuffle: 1 # compression for RESTART files written by FMS
+    deflate_level: 1
+
+  # Disable the use of coupler.res; get model start time from model_configure
+  use_coupler_res: False
+
+  gdas_parms:
+    diag_table: diag_table_da
+    restart_interval: 6
+  gfs_parms:
+    diag_table: diag_table
+    restart_interval: 0
